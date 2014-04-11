@@ -1,0 +1,11 @@
+{
+  "name": "acme",
+  "version": "0.1.0",
+  "description": "Acme code test",
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "~0.4.4",
+    "grunt-contrib-less": "~0.11.0",
+    "grunt-contrib-watch": "~0.6.1"
+  }
+}
