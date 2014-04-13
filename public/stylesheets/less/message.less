@@ -1,0 +1,54 @@
+.msg {
+	position: relative;
+	cursor: pointer;
+
+	width: auto;
+	margin: 0px 20px 20px 20px;
+
+	background-color: #ECECEC;
+
+	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+
+	&:hover {
+		.msg__id {
+			left: -15px;
+		}
+	}
+}
+	.msg__id {
+		position: absolute;
+		top: 20px;
+		left: -10px;
+
+		padding: 5px 10px;
+		background-color: #000;
+
+		font-size: 10px;
+		letter-spacing: 0.1em;
+		color: #fff;
+
+		-webkit-transition: all 0.3s ease;
+		   -moz-transition: all 0.3s ease;
+		        transition: all 0.3s ease;
+	}
+	.msg__content {
+		padding: 20px 20px 20px 70px;
+	}
+
+	.msg--active {
+		.msg__id {
+			left: -15px;
+		}
+	}
+
+	/** Message types **/
+	.msg--birthday {
+		.msg__id {
+			background-color: @color-birthday;
+		}
+	}
+	.msg--child {
+		.msg__id {
+			background-color: @color-child;
+		}
+	}

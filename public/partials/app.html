@@ -1,0 +1,12 @@
+<div class="app">
+	<div class="container" ng-controller="AppCtrl">
+		<div class="sidebar">
+			<div class="inner">
+				<a ng-class="{ active: tab.active == true}" href="{{ tab.link }}" title="{{ tab.title }}" ng-repeat="tab in tabs">{{ tab.title }}</a>
+			</div>
+		</div>
+
+		<div class="content" ng-include="containerContent"></div>
+	</div>
+	<div class="cf"></div>
+</div>

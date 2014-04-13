@@ -1,0 +1,15 @@
+<div class="hero" ng-controller="HeroCtrl">
+	<div class="hero__inner">
+		<span class="hero__title">Easy message processing</span>
+
+		<a href="/login" class="button button-big hero__button ng-class:class" ng-click="login($event)">Login</a>
+	</div>
+
+	<div class="hero__login ng-class:class" ng-controller="LoginCtrl">
+		<form ng-submit="login()">
+			<input class="centered" type="text" placeholder="email" name="email">
+			<input class="centered" type="password" placeholder="password" name="password">
+			<input type="submit" value="Login" name="login">
+		</form>
+	</div>
+</div>

@@ -1,13 +1,50 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="acme">
 	<head>
 		<meta charset="utf-8">
 		<title>ACME</title>
 
-		<link rel="stylesheet" type="text/css" href="static/stylesheets/acme.min.css">
+		<link href='http://fonts.googleapis.com/css?family=Open+Sans:300,400,700' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Signika:400,700' rel='stylesheet' type='text/css'>
+
+		<!-- build:css(public) assets/css/acme.min.css -->
+		<link rel="stylesheet" type="text/css" href="stylesheets/acme.css">
+		<!-- endbuild -->
 	</head>
 
-	<body>
+	<body ng-controller="MainCtrl">
+		<header>
+			<div class="topbar">
+				<h1 class="logo"><a href="/">acme</a></h1>
+			</div>
+		</header>
 
+		<div ng-view resize style="height: {{ windowHeight }}px">
+			
+			window.height: {{ windowHeight }}
+
+		</div>
+
+		<!-- Templates -->
+		<script type="text/ng-template" id="msg.html">
+			<div class="msg__id">#001</div>
+
+			<div class="msg__content">
+				{{ msg.name }}
+			</div>
+		</script>
+
+		<!-- build:js(public) assets/js/dependencies.min.js -->
+		<script src="js/libs/angular.js"></script>
+		<script src="js/libs/angular-route.min.js"></script>
+		<script src="js/libs/angular-cookies.min.js"></script>
+		<script src="js/libs/underscore-min.js"></script>
+		<!-- endbuild -->
+
+		<!-- build:js(public) assets/js/core.min.js -->
+		<script src="js/app.js"></script>
+		<script src="js/controllers.js"></script>
+		<script src="js/directives.js"></script>
+		<!-- endbuild -->
 	</body>
 </html>
