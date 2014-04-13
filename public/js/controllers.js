@@ -3,29 +3,6 @@
 var acmeControllers = angular.module('acmeControllers', []);
 
 acmeControllers.controller('MainCtrl', ['$scope', function($scope) {
-	$scope.pending = [
-		{
-			type: 'birthday',
-			name: 'birthday',
-			msg: 'birthday msg',
-			date: '2014-03-12'
-		},
-		{
-			type: 'child',
-			name: 'child',
-			msg: 'birthday msg',
-			date: '2014-03-12'
-		}
-	]
-	$scope.processed = [
-		{
-			type: 'birthday',
-			name: 'birthday',
-			msg: 'birthday msg',
-			date: '2014-03-12'
-		}
-	]
-
 	$scope.init = function() {
 		$scope.$on('showLogin', function(e) {
 			$scope.$broadcast('showLoginForm');
@@ -57,7 +34,7 @@ acmeControllers.controller('LoginCtrl', ['$scope', function($scope) {
 	$scope.init();
 }])
 
-acmeControllers.controller('AppCtrl', ['$scope', '$routeParams', function($scope, $routeParams) {
+acmeControllers.controller('AppCtrl', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams) {
 	$scope.tabs = [
 		{
 			title: 'Pending',
@@ -74,6 +51,9 @@ acmeControllers.controller('AppCtrl', ['$scope', '$routeParams', function($scope
 	]
 
 	$scope.init = function() {
+		$scope.pending = [];
+		$scope.processed = [];
+
 		var tab = _.find($scope.tabs, function(tab) {
 			return tab.title.toLowerCase() === $routeParams.tab
 		})
@@ -82,6 +62,22 @@ acmeControllers.controller('AppCtrl', ['$scope', '$routeParams', function($scope
 		tab.active = true;
 
 		$scope.containerContent = tab.url;
+
+		// Get pending and processed messages
+		$http.get('/api/msg/pending')
+			.success(function(data) {
+				$scope.pending = data;
+			})
+			.error(function(data) {
+				console.log('error');
+			})
+		$http.get('/api/msg/processed')
+			.success(function(data) {
+				$scope.processed = data;
+			})
+			.error(function(data) {
+				console.log('error');
+			})
 	}
 
 	$scope.changeTab = function(e, url) {
@@ -94,7 +90,7 @@ acmeControllers.controller('AppCtrl', ['$scope', '$routeParams', function($scope
 }])
 
 /* Controller for messages */
-acmeControllers.controller('MsgCtrl', ['$scope', function($scope) {
+acmeControllers.controller('MsgCtrl', ['$scope', '$http', function($scope, $http) {
 	$scope.init = function() {
 		var msg = $scope.msg;
 		msg.msgClass = 'msg--' + msg.type;
@@ -115,13 +111,13 @@ acmeControllers.controller('MsgCtrl', ['$scope', function($scope) {
 }])
 
 /* Controllers for specific message types */
-acmeControllers.controller('MsgBirthdayCtrl', ['$scope', function($scope) {
+acmeControllers.controller('MsgBirthdayCtrl', ['$scope', '$http', function($scope, $http) {
 	$scope.init = function() {
 		console.log('MsgBirthdayCtrl');
 	}
 	$scope.init();
 }])
-acmeControllers.controller('MsgChildCtrl', ['$scope', function($scope) {
+acmeControllers.controller('MsgChildCtrl', ['$scope', '$http', function($scope, $http) {
 	$scope.init = function() {
 		console.log('MsgChildCtrl');
 
