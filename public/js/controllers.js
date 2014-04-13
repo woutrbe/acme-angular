@@ -81,8 +81,6 @@ acmeControllers.controller('AppCtrl', ['$scope', '$routeParams', function($scope
 		if(!tab) tab = $scope.tabs[0];
 		tab.active = true;
 
-		console.log($scope.tabs);
-
 		$scope.containerContent = tab.url;
 	}
 
@@ -95,7 +93,39 @@ acmeControllers.controller('AppCtrl', ['$scope', '$routeParams', function($scope
 	$scope.init();
 }])
 
+/* Controller for messages */
 acmeControllers.controller('MsgCtrl', ['$scope', function($scope) {
-	var msg = $scope.msg;
-	msg.msgClass = 'msg--' + msg.type;
+	$scope.init = function() {
+		var msg = $scope.msg;
+		msg.msgClass = 'msg--' + msg.type;
+
+		$scope.$on('saved', function(e) {
+			console.log('Msg saved');
+		})
+	}
+
+	// Open the message and load the correct partial
+	$scope.open = function() {
+		console.log('open');
+
+		$scope.msgContent = 'partials/message/' + $scope.msg.type + '.html';
+	}
+
+	$scope.init();
+}])
+
+/* Controllers for specific message types */
+acmeControllers.controller('MsgBirthdayCtrl', ['$scope', function($scope) {
+	$scope.init = function() {
+		console.log('MsgBirthdayCtrl');
+	}
+	$scope.init();
+}])
+acmeControllers.controller('MsgChildCtrl', ['$scope', function($scope) {
+	$scope.init = function() {
+		console.log('MsgChildCtrl');
+
+		// $scope.$emit('saved');
+	}
+	$scope.init();
 }])
