@@ -4,11 +4,15 @@ var path = require('path'),
 	Schema = mongoose.Schema;
 
 var defaultBirthdayMsg = 'Mate, Happy Birthday. To celebrate this once a year occasion we have picked the following gift: [gift]. Enjoy.',
-	defaultChildMsg = 'Whooa well done and congratulations on the birth of [babyname] on [birthdate].';
+	defaultChildMsg = 'Whooa well done and congratulations on the birth of [babyname] on [birthdate].',
+	defaultUserID = 13;
 
 var ItemSchema = new Schema({
 	id: {
 		type: Number
+	},
+	user_id: {
+		type: Number,
 	},
 	type: {
 		type: String,
@@ -38,7 +42,8 @@ module.exports = function(app) {
 	// Return all pending messages
 	app.get('/api/msg/pending', function(req, res) {
 		Item.find({
-			processed: false
+			processed: false,
+			user_id: defaultUserID
 		}).sort('id').exec(function(err, items) {
 			if(err) {
 				res.render('error', {
@@ -53,7 +58,8 @@ module.exports = function(app) {
 	// Return all processed message
 	app.get('/api/msg/processed', function(req, res) {
 		Item.find({
-			processed: true
+			processed: true,
+			user_id: defaultUserID
 		}).sort('id').exec(function(err, items) {
 			if(err) {
 				res.render('error', {
@@ -69,10 +75,27 @@ module.exports = function(app) {
 	app.get('/api/msg/names', function(req, res) {
 		// Return a fixed array
 		var names = [
-			{name: 'test'},
-			{name: 'asdf'},
-			{name: 'tesast'},
-			{name: 'aff'}
+			{ name: 'Sophia' },
+			{ name: 'Emma' },
+			{ name: 'Olivia' },
+			{ name: 'Isabella' },
+			{ name: 'Ava' },
+			{ name: 'Lily' },
+			{ name: 'Zoe' },
+			{ name: 'Chloe' },
+			{ name: 'Mia' },
+			{ name: 'Madison' },
+			{ name: 'Emily' },
+			{ name: 'Ella' },
+			{ name: 'Madelyn' },
+			{ name: 'Abigail' },
+			{ name: 'Aubrey' },
+			{ name: 'Addison' },
+			{ name: 'Avery' },
+			{ name: 'Layla' },
+			{ name: 'Hailey' },
+			{ name: 'Amelia' },
+			{ name: 'Hannah' }
 		]
 
 		res.json(names);
@@ -116,10 +139,11 @@ module.exports = function(app) {
 	// Create a new message
 	app.post('/api/msg/new', function(req, res) {
 		var item = new Item({
-			type: res.body.type,
+			user_id: defaultUserID,
+			type: req.body.type,
 			processed: false,
-			msg: (res.body.type == 'child' ? defaultChildMsg : defaultBirthdayMsg),
-			date: new Date()
+			msg: (req.body.type == 'child' ? defaultChildMsg : defaultBirthdayMsg),
+			date: new Date().toDateString()
 		})
 
 		item.save(function(err) {
@@ -138,8 +162,6 @@ module.exports = function(app) {
 			msg: req.body.msg,
 			processed: true
 		}
-
-		console.log(item);
 
 		Item.update({
 			_id: item._id

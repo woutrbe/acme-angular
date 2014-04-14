@@ -20,7 +20,7 @@ acmeControllers.controller('HeroCtrl', ['$scope', function($scope) {
 	}
 }])
 
-acmeControllers.controller('LoginCtrl', ['$scope', function($scope) {
+acmeControllers.controller('LoginCtrl', ['$scope', '$location', function($scope, $location) {
 	$scope.init = function() {
 		$scope.$on('showLoginForm', function(e) {
 			$scope.class = 'hero__login--shown'
@@ -28,7 +28,7 @@ acmeControllers.controller('LoginCtrl', ['$scope', function($scope) {
 	}
 
 	$scope.login = function() {
-		window.alert('login');
+		$location.path('/home');
 	}
 
 	$scope.init();
@@ -88,13 +88,12 @@ acmeControllers.controller('AppCtrl', ['$scope', '$http', '$routeParams', functi
 
 	$scope.newItem = function(e, type) {
 		e.preventDefault();
-		console.log(type);
 		
-		$http.post('/api/message/new', {
+		$http.post('/api/msg/new', {
 			type: type
 		})
 		.success(function(data) {
-			console.log(data);
+			$scope.pending.push(data);
 		})
 		.error(function(data) {
 			console.log(data);
@@ -118,6 +117,12 @@ acmeControllers.controller('MsgCtrl', ['$scope', '$http', '$element', function($
 		$scope.$on('saved', function(e) {
 			$scope.isCollapsed = true;
 			$scope.msgEl.removeClass('msg--active');
+
+			// $scope.msgEl.addClass('msg--hide');
+			// window.setTimeout(function() {
+			// 	$scope.pending.splice( $scope.pending.indexOf(msg), 1 );
+			// 	// $scope.pending = _.without($scope.pending, _.findWhere($scope.pending, {_id: msg._id}));
+			// }, 1000);
 		})
 	}
 
@@ -249,7 +254,7 @@ acmeControllers.controller('MsgChildCtrl', ['$scope', '$http', function($scope, 
 	$scope.save = function() {
 		$scope.msg.processed = true;
 		$scope.msg.babyname = $scope.selectedName;
-		$scope.msg.birthday = $scope.selectedBirthdate;
+		$scope.msg.birthday = new Date($scope.selectedBirthdate).toDateString();
 
 		$scope.update();
 

@@ -177,6 +177,10 @@ select {
   border: none;
   margin: 0px 0px 10px 0px;
 }
+.msg--hide {
+  opacity: 0;
+  height: 0px;
+}
 .msg--active .msg__id {
   left: -15px;
 }
@@ -201,6 +205,8 @@ select {
   transition: all 0.5s ease;
 }
 .button:hover {
+  color: #fff;
+  text-decoration: none;
   background-color: #b74143;
 }
 .hero {
@@ -236,7 +242,7 @@ select {
   opacity: 0;
 }
 .hero__login {
-  width: 200px;
+  width: 300px;
   margin: 0px auto 100px auto;
   margin-top: 50px;
   opacity: 0;
@@ -247,4 +253,7 @@ select {
   transition: all 0.3s ease;
   margin-top: 0px;
   opacity: 1;
+}
+.hero__login input {
+  margin-left: 0px;
 }

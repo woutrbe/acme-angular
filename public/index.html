@@ -28,7 +28,7 @@
 
 		<!-- Templates -->
 		<script type="text/ng-template" id="msg.html">
-			<div class="msg__id">#001</div>
+			<div class="msg__id">#{{ $index }}</div>
 
 			<div class="msg__content" ng-click="open()">
 				<span class="msg__date">{{ msg.date }}</span>
