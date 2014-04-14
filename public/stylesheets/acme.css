@@ -48,7 +48,7 @@ body {
   border-right: 1px solid #ECECEC;
   padding: 20px 0px 0px 0px;
 }
-.container .sidebar .inner > a {
+.container .sidebar .inner .cats > a {
   color: #000;
   font-size: 14px;
   text-decoration: none;
@@ -59,8 +59,8 @@ body {
   -moz-transition: all 0.2s ease;
   transition: all 0.2s ease;
 }
-.container .sidebar .inner > a:hover,
-.container .sidebar .inner > a.active {
+.container .sidebar .inner .cats > a:hover,
+.container .sidebar .inner .cats > a.active {
   color: #e85153;
   border-right-width: 2px;
 }

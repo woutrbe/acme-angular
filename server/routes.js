@@ -116,10 +116,10 @@ module.exports = function(app) {
 	// Create a new message
 	app.post('/api/msg/new', function(req, res) {
 		var item = new Item({
-			type: 'birthday',
+			type: res.body.type,
 			processed: false,
-			msg: defaultChildMsg,
-			date: '2014-03-18'
+			msg: (res.body.type == 'child' ? defaultChildMsg : defaultBirthdayMsg),
+			date: new Date()
 		})
 
 		item.save(function(err) {
@@ -134,13 +134,19 @@ module.exports = function(app) {
 	// Update message
 	app.post('/api/msg/save', function(req, res) {
 		var item = req.body.item;
-		item = _.extend(item, req.body.msg);
+		var updatedItem = {
+			msg: req.body.msg,
+			processed: true
+		}
 
-		item.save(function(err) {
+		console.log(item);
+
+		Item.update({
+			_id: item._id
+		}, updatedItem, function(err) {
 			if(err) {
-
 			} else {
-				res.json(item);
+				res.json(updatedItem);
 			}
 		})
 	})

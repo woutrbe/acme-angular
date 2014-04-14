@@ -2,7 +2,14 @@
 	<div class="container" ng-controller="AppCtrl">
 		<div class="sidebar">
 			<div class="inner">
-				<a ng-class="{ active: tab.active == true}" href="{{ tab.link }}" title="{{ tab.title }}" ng-repeat="tab in tabs">{{ tab.title }}</a>
+				<div class="options">
+					<a href="#" ng-click="newItem($event, 'birthday')">New birthday</a>
+					<a href="#" ng-click="newItem($event, 'child')">New child</a>
+				</div>
+
+				<div class="cats">
+					<a ng-class="{ active: tab.active == true}" href="{{ tab.link }}" title="{{ tab.title }}" ng-repeat="tab in tabs">{{ tab.title }}</a>
+				</div>
 			</div>
 		</div>
 

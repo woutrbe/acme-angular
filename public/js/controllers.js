@@ -86,6 +86,21 @@ acmeControllers.controller('AppCtrl', ['$scope', '$http', '$routeParams', functi
 		$scope.containerContent = url;
 	}
 
+	$scope.newItem = function(e, type) {
+		e.preventDefault();
+		console.log(type);
+		
+		$http.post('/api/message/new', {
+			type: type
+		})
+		.success(function(data) {
+			console.log(data);
+		})
+		.error(function(data) {
+			console.log(data);
+		})
+	}
+
 	$scope.init();
 }])
 
@@ -151,7 +166,6 @@ acmeControllers.controller('MsgBirthdayCtrl', ['$scope', '$http', function($scop
 		$scope.update();
 
 		// Update item
-		console.log($scope.msg);
 		$http.post('/api/msg/save', {
 			item: $scope.msg,
 			msg: $scope.msg.msg
