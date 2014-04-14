@@ -118,7 +118,7 @@ acmeControllers.controller('MsgCtrl', ['$scope', '$http', '$element', function($
 			$scope.isCollapsed = true;
 			$scope.msgEl.removeClass('msg--active');
 
-			// $scope.msgEl.addClass('msg--hide');
+			$scope.msgEl.addClass('msg--done');
 			// window.setTimeout(function() {
 			// 	$scope.pending.splice( $scope.pending.indexOf(msg), 1 );
 			// 	// $scope.pending = _.without($scope.pending, _.findWhere($scope.pending, {_id: msg._id}));

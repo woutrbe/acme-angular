@@ -177,9 +177,8 @@ select {
   border: none;
   margin: 0px 0px 10px 0px;
 }
-.msg--hide {
-  opacity: 0;
-  height: 0px;
+.msg--done {
+  background-color: #DBF2CB;
 }
 .msg--active .msg__id {
   left: -15px;
