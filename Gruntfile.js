@@ -46,6 +46,12 @@ module.exports = function(grunt) {
 			css: {
 				src: ['public/stylesheets/acme.min.css'],
 				dest: 'build/assets/css/acme.min.css'
+			},
+			fonts: {
+				expand: true,
+				flatten: true,
+				src: ['public/fonts/**'],
+				dest: 'build/assets/fonts/'
 			}
 		},
 
@@ -76,6 +82,7 @@ module.exports = function(grunt) {
 		'concat',
 		'uglify',
 		'usemin',
+		'copy:fonts',
 		'clean:tmp'
 	])
 }

@@ -4,6 +4,8 @@ var acmeApp	= angular.module('acme', [
 	'ngRoute',
 	'ngCookies',
 
+	'ui.bootstrap',
+
 	'acmeControllers',
 	'acmeDirectives'
 ])

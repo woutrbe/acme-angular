@@ -8,6 +8,7 @@
 		<link href='http://fonts.googleapis.com/css?family=Signika:400,700' rel='stylesheet' type='text/css'>
 
 		<!-- build:css(public) assets/css/acme.min.css -->
+		<link rel="stylesheet" type="text/css" href="stylesheets/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="stylesheets/acme.css">
 		<!-- endbuild -->
 	</head>
@@ -29,16 +30,21 @@
 		<script type="text/ng-template" id="msg.html">
 			<div class="msg__id">#001</div>
 
-			<div class="msg__content">
-				{{ msg.name }}
+			<div class="msg__content" ng-click="open()">
+				<span class="msg__date">{{ msg.date }}</span>
+				<span class="msg__msg">{{ msg.msg }}</span>
 			</div>
-			<div class="msg_edit" ng-include="msgContent"></div>
+			<div collapse="isCollapsed">
+				<div class="msg__edit" ng-include="msgContent"></div>
+			</div>
 		</script>
 
 		<!-- build:js(public) assets/js/dependencies.min.js -->
 		<script src="js/libs/angular.js"></script>
 		<script src="js/libs/angular-route.min.js"></script>
 		<script src="js/libs/angular-cookies.min.js"></script>
+		<script src="js/libs/ui-bootstrap-custom-0.10.0.min.js"></script>
+		<script src="js/libs/ui-bootstrap-custom-tpls-0.10.0.min.js"></script>
 		<script src="js/libs/underscore-min.js"></script>
 		<!-- endbuild -->
 

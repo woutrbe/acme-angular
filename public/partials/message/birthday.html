@@ -1,1 +1,6 @@
-<div ng-controller="MsgBirthdayCtrl">Birthday</div>
+<div ng-controller="MsgBirthdayCtrl">
+	<form method="#" ng-submit="save()">
+		<select name="gift" ng-model="selectedGift" data-ng-options="item.name as item.name for item in gifts"></select>
+		<input type="submit" value="Send!">
+	</form>
+</div>

@@ -1,1 +1,12 @@
-<div ng-controller="MsgChildCtrl">Child</div>
+<div ng-controller="MsgChildCtrl">
+	<form method="#" ng-submit="save()">
+		<p class="input-group">
+			<input ng-model="selectedBirthdate" type="text" name="birthdate" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min="minDate" max="'2015-06-22'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+			<span class="input-group-btn">
+				<button class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+			</span>
+		</p>
+		<select name="babyname" ng-model="selectedName" data-ng-options="item.name as item.name for item in names"></select>
+		<input type="submit" value="Send!">
+	</form>
+</div>

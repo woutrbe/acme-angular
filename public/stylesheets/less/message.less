@@ -9,6 +9,10 @@
 
 	box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
 
+	-webkit-transition: all 0.3s ease;
+	   -moz-transition: all 0.3s ease;
+	        transition: all 0.3s ease;
+
 	&:hover {
 		.msg__id {
 			left: -15px;
@@ -33,6 +37,32 @@
 	}
 	.msg__content {
 		padding: 20px 20px 20px 70px;
+	}
+	.msg__date,
+	.msg__msg {
+		display: block;
+	}
+
+	.msg__date {
+		margin-bottom: 10px;
+		font-weight: @font-weight-bold;
+	}
+	.msg__msg {
+
+	}
+	.msg__edit {
+		padding: 20px;
+
+		.btn {
+			border: none;
+		}
+
+		input,
+		.input-group,
+		select {
+			border: none;
+			margin: 0px 0px 10px 0px;
+		}
 	}
 
 	.msg--active {

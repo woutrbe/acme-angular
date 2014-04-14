@@ -90,21 +90,33 @@ acmeControllers.controller('AppCtrl', ['$scope', '$http', '$routeParams', functi
 }])
 
 /* Controller for messages */
-acmeControllers.controller('MsgCtrl', ['$scope', '$http', function($scope, $http) {
+acmeControllers.controller('MsgCtrl', ['$scope', '$http', '$element', function($scope, $http, $element) {
 	$scope.init = function() {
+		$scope.msgContent = 'partials/message/' + $scope.msg.type + '.html';	
+		$scope.isCollapsed = true;
+
+		$scope.msgEl = angular.element($element);
+
 		var msg = $scope.msg;
 		msg.msgClass = 'msg--' + msg.type;
 
 		$scope.$on('saved', function(e) {
-			console.log('Msg saved');
+			$scope.isCollapsed = true;
+			$scope.msgEl.removeClass('msg--active');
 		})
 	}
 
 	// Open the message and load the correct partial
 	$scope.open = function() {
-		console.log('open');
+		if($scope.msg.processed) return false;
 
-		$scope.msgContent = 'partials/message/' + $scope.msg.type + '.html';
+		if(!$scope.msgEl.hasClass('msg--active')) {
+			$scope.msgEl.addClass('msg--active');
+			$scope.isCollapsed = false;
+		} else {
+			$scope.msgEl.removeClass('msg--active');
+			$scope.isCollapsed = true;
+		}
 	}
 
 	$scope.init();
@@ -113,15 +125,131 @@ acmeControllers.controller('MsgCtrl', ['$scope', '$http', function($scope, $http
 /* Controllers for specific message types */
 acmeControllers.controller('MsgBirthdayCtrl', ['$scope', '$http', function($scope, $http) {
 	$scope.init = function() {
-		console.log('MsgBirthdayCtrl');
+		$scope.selectedGift = null;
+
+		if($scope.msg.processed) {
+			$scope.update();
+		} else {
+			// Load list of gifts
+			$http.get('/api/msg/gifts')
+				.success(function(data) {
+					$scope.gifts = data;
+
+					$scope.selectedGift = data[0].name;
+				})
+		}
 	}
+
+	$scope.update = function() {
+		// Fill in data
+		$scope.msg.msg = $scope.msg.msg.replace('[gift]', $scope.msg.gift);
+	}
+
+	$scope.save = function() {
+		$scope.msg.processed = true;
+		$scope.msg.gift = $scope.selectedGift;
+		$scope.update();
+
+		// Update item
+		console.log($scope.msg);
+		$http.post('/api/msg/save', {
+			item: $scope.msg,
+			msg: $scope.msg.msg
+		})
+		.success(function(data) {
+			console.log(data);
+		})
+		.error(function(data) {
+			console.log(data);
+		})
+
+		$scope.$emit('saved');
+	}
+
 	$scope.init();
 }])
 acmeControllers.controller('MsgChildCtrl', ['$scope', '$http', function($scope, $http) {
 	$scope.init = function() {
-		console.log('MsgChildCtrl');
+		$scope.selectedBirthdate = new Date();
+		$scope.selectedName = null;
 
-		// $scope.$emit('saved');
+		// Initiate date picker
+		$scope.today = function() {
+			$scope.dt = new Date();
+		};
+		$scope.today();
+
+		$scope.showWeeks = true;
+			$scope.toggleWeeks = function () {
+			$scope.showWeeks = ! $scope.showWeeks;
+		};
+
+		$scope.clear = function () {
+			$scope.dt = null;
+		};
+
+		// Disable weekend selection
+		$scope.disabled = function(date, mode) {
+			return ( mode === 'day' && ( date.getDay() === 0 || date.getDay() === 6 ) );
+		};
+
+		$scope.toggleMin = function() {
+			$scope.minDate = ( $scope.minDate ) ? null : new Date();
+		};
+		$scope.toggleMin();
+
+		$scope.open = function($event) {
+			$event.preventDefault();
+			$event.stopPropagation();
+
+			$scope.opened = true;
+		};
+
+		$scope.dateOptions = {
+			'year-format': "'yy'",
+			'starting-day': 1
+		};
+
+		$scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'shortDate'];
+		$scope.format = $scope.formats[0];
+
+		if($scope.msg.processed) {
+			$scope.update();
+		} else {
+			// Load list of names
+			$http.get('/api/msg/names')
+				.success(function(data) {
+					$scope.names = data;
+
+					$scope.selectedName = data[0].name;
+				})
+		}
 	}
+
+	$scope.update = function() {
+		// Fill in data
+		$scope.msg.msg = $scope.msg.msg.replace('[babyname]', $scope.msg.babyname);
+		$scope.msg.msg = $scope.msg.msg.replace('[birthdate]', $scope.msg.birthday);
+	}
+
+	$scope.save = function() {
+		$scope.msg.processed = true;
+		$scope.msg.babyname = $scope.selectedName;
+		$scope.msg.birthday = $scope.selectedBirthdate;
+
+		$scope.update();
+
+		// Update item
+		$http.post('/api/msg/save', {
+			item: $scope.msg,
+			msg: $scope.msg.msg
+		})
+		.success(function(data) {
+			console.log(data);
+		})
+
+		$scope.$emit('saved');
+	}
+
 	$scope.init();
 }])

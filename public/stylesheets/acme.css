@@ -92,22 +92,40 @@ header {
 :-moz-placeholder,
 ::-moz-placeholder,
 :-ms-input-placeholder {
-  color: #e85153;
+  color: #777777;
 }
 input[type="text"],
-input[type="password"] {
+input[type="password"],
+select {
+  outline: none;
   width: 100%;
   background-color: #fff;
   padding: 10px 20px;
   margin: 0px 0px 20px -20px;
-  color: #e85153;
+  color: #777777;
   border: 1px solid #e85153;
+  border-radius: 4px;
   display: block;
 }
 input[type="submit"] {
-  background-color: #fff;
-  color: #e85153;
-  border: 1px solid #e85153;
+  outline: none;
+  cursor: pointer;
+  background-color: #e85153;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+input[type="submit"]:hover {
+  background-color: #b74143;
+}
+select {
+  -webkit-appearance: none;
+  background: #ffffff url('http://i45.tinypic.com/309nb74.png') center right no-repeat;
+  background-position-x: 98%;
 }
 .msg {
   position: relative;
@@ -116,6 +134,9 @@ input[type="submit"] {
   margin: 0px 20px 20px 20px;
   background-color: #ECECEC;
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.3);
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  transition: all 0.3s ease;
 }
 .msg:hover .msg__id {
   left: -15px;
@@ -136,21 +157,40 @@ input[type="submit"] {
 .msg__content {
   padding: 20px 20px 20px 70px;
 }
+.msg__date,
+.msg__msg {
+  display: block;
+}
+.msg__date {
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+.msg__edit {
+  padding: 20px;
+}
+.msg__edit .btn {
+  border: none;
+}
+.msg__edit input,
+.msg__edit .input-group,
+.msg__edit select {
+  border: none;
+  margin: 0px 0px 10px 0px;
+}
 .msg--active .msg__id {
   left: -15px;
 }
 /** Message types **/
 .msg--birthday .msg__id {
-  background-color: #00ff00;
+  background-color: #057d9f;
 }
 .msg--child .msg__id {
-  background-color: #00ffff;
+  background-color: #5a9800;
 }
 .button {
   padding: 10px 20px;
   margin: 0px auto;
   display: block;
-  border: 2px solid #e85153;
   color: #fff;
   background-color: #e85153;
   text-decoration: none;
@@ -161,9 +201,7 @@ input[type="submit"] {
   transition: all 0.5s ease;
 }
 .button:hover {
-  -webkit-transform: scale(1.1, 1.1);
-  -moz-transform: scale(1.1, 1.1);
-  transform: scale(1.1, 1.1);
+  background-color: #b74143;
 }
 .hero {
   width: 100%;
